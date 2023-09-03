@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const blobToImageUrl = (blobData, chunkSize) => {
+        // 声明一个变量来保存当前已读取的数据的位置
+        let currentPosition = 0;
+        // 声明一个变量来保存当前已读取的 Blob 数据
+        let accumulatedBlob = null;
+        const chunk = fullBlob.slice(
+          currentPosition,
+          currentPosition + blockSize
+        );
+
+        // 更新当前位置
+        currentPosition += chunk.size;
+        // 判断是否还有数据未读取
+        while (currentPosition < fullBlob.size) {
+          // 如果是第一次读取，直接赋值给 accumulatedBlob
+          if (!accumulatedBlob) {
+            accumulatedBlob = chunk;
+          } else {
+            // 否则，拼接到已有数据后面
+            accumulatedBlob = new Blob([accumulatedBlob, chunk]);
+          }
+        }
+        // 已经读取完整个 Blob，将其转换为图像 URL
+        const imageUrl = URL.createObjectURL(accumulatedBlob);
+        return imageUrl;
+      };
+    </script>
+  </body>
+</html>
